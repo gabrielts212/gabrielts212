@@ -45,8 +45,8 @@
  <div align="center"justify-content+"center" >
    <a href="https://github.com/gabrielts212">
    <p align="left" >
- <a href="https://github.com/gabrielts212"><img  alt="gabriel's GitHub Stats" <img height="190px" width:"200px" src="https://awesome-github-stats.azurewebsites.net/user-stats/gabrielts212?cardType=github&theme=nord" /></a>
-    <img height="200px" width:"200px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gabrielts212&layout=compact&langs_count=7&theme=nord"/></div>
+ <a href="https://github.com/gabrielts212"><img  alt="gabriel's GitHub Stats" <img height="190px" width:"200px" src="https://awesome-github-stats.azurewebsites.net/user-stats/gabrielts212?cardType=github&theme=nord" />
+ </a><img height="200px" width:"400px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gabrielts212&layout=compact&langs_count=7&theme=nord"/></div>
   
   ![Snake animation](https://github.com/gabrielts212/gabrielts212/blob/output/github-contribution-grid-snake.svg)
  </div>
