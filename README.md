@@ -7,7 +7,6 @@
    
   ![](https://komarev.com/ghpvc/?username=gabrielts212)
   
-  •🎓 Systems Analysis and Development from (Uva).
   
   •💻 I'm a Full-Stack developer
   
@@ -41,12 +40,5 @@
  <a href="https://instagram.com" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a> <a href="colocar o link do discord aqui" target="_blank"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" target="_blank"></a> <a href = "mailto:gabrielts2122@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a> <a href="https://www.linkedin.com/in/gabriel-nascimento-pereira/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>  
 <div></h1>
  
- <h3>My github stats 📊</h3>
- <div align="center"justify-content+"center" >
-   <a href="https://github.com/gabrielts212">
-   <p align="left" ><a href="https://github.com/gabrielts212"><img  alt="gabriel's GitHub Stats" <img height="200px" width="200"  src="https://awesome-github-stats.azurewebsites.net/user-stats/gabrielts212?cardType=github&theme=nord" />
- </a><img height="200px" width="200" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gabrielts212&layout=compact&langs_count=7&theme=nord"/></div>
-  
-  ![Snake animation](https://github.com/gabrielts212/gabrielts212/blob/output/github-contribution-grid-snake.svg)
- </div>
+
 
