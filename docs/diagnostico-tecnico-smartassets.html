@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico Técnico — SmartAssets / Smart Check</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #1a1a2e;
+      background: #fff;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem;
+    }
+
+    /* ─── Cover Page ────────────────────────────────────────────────── */
+    .cover {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      border-bottom: 4px solid #0f3460;
+      margin-bottom: 3rem;
+      page-break-after: always;
+    }
+    .cover .badge {
+      display: inline-block;
+      background: #0f3460;
+      color: #fff;
+      padding: .3rem 1rem;
+      border-radius: 4px;
+      font-size: .85rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .cover h1 {
+      font-size: 2.4rem;
+      color: #0f3460;
+      margin-bottom: .4rem;
+    }
+    .cover .subtitle {
+      font-size: 1.1rem;
+      color: #16213e;
+      margin-bottom: 2.5rem;
+    }
+    .cover table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      min-width: 340px;
+    }
+    .cover table td {
+      padding: .35rem .8rem;
+      border: 1px solid #dde3f0;
+      text-align: left;
+    }
+    .cover table td:first-child { font-weight: 600; background: #f0f4ff; }
+
+    /* ─── TOC ───────────────────────────────────────────────────────── */
+    .toc {
+      background: #f7f9ff;
+      border: 1px solid #dde3f0;
+      border-radius: 6px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+      page-break-after: always;
+    }
+    .toc h2 { color: #0f3460; margin-bottom: 1rem; font-size: 1.15rem; }
+    .toc ol { padding-left: 1.4rem; }
+    .toc li { margin: .3rem 0; }
+    .toc a { color: #0f3460; text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ─── Headings ──────────────────────────────────────────────────── */
+    h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; }
+    h1 { font-size: 1.9rem; color: #0f3460; margin: 2.5rem 0 1rem; border-bottom: 3px solid #0f3460; padding-bottom: .4rem; }
+    h2 { font-size: 1.4rem; color: #16213e; margin: 2rem 0 .8rem; border-bottom: 2px solid #e8ecf7; padding-bottom: .3rem; }
+    h3 { font-size: 1.1rem; color: #16213e; margin: 1.6rem 0 .6rem; }
+    h4 { font-size: .95rem; color: #1a1a2e; margin: 1.2rem 0 .5rem; }
+
+    /* ─── Paragraphs & Lists ────────────────────────────────────────── */
+    p { margin: .7rem 0; }
+    ul, ol { padding-left: 1.6rem; margin: .6rem 0; }
+    li { margin: .3rem 0; }
+
+    /* ─── Tables ─────────────────────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0;
+      font-size: .88rem;
+    }
+    th {
+      background: #0f3460;
+      color: #fff;
+      padding: .5rem .75rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: .45rem .75rem;
+      border-bottom: 1px solid #e0e5f2;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f7f9ff; }
+    tr:hover td { background: #eef2ff; }
+
+    /* ─── Code ───────────────────────────────────────────────────────── */
+    code {
+      background: #f0f4ff;
+      color: #c0392b;
+      padding: .1em .35em;
+      border-radius: 3px;
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: .88em;
+    }
+    pre {
+      background: #1a1a2e;
+      color: #e8ecf7;
+      padding: 1.1rem 1.3rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: .82rem;
+      line-height: 1.6;
+    }
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ─── Blockquote / Callout ──────────────────────────────────────── */
+    blockquote {
+      border-left: 4px solid #e67e22;
+      background: #fef9f0;
+      padding: .7rem 1.2rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1rem 0;
+      font-size: .9rem;
+    }
+    blockquote strong { color: #e67e22; }
+
+    /* ─── Callout boxes ─────────────────────────────────────────────── */
+    .callout {
+      border-radius: 6px;
+      padding: .8rem 1.2rem;
+      margin: 1rem 0;
+      font-size: .9rem;
+    }
+    .callout-warning { background: #fff8e1; border-left: 4px solid #f39c12; }
+    .callout-danger  { background: #fdecea; border-left: 4px solid #e74c3c; }
+    .callout-info    { background: #e8f4fd; border-left: 4px solid #2980b9; }
+    .callout-success { background: #eafaf1; border-left: 4px solid #27ae60; }
+
+    /* ─── Horizontal rule ───────────────────────────────────────────── */
+    hr { border: none; border-top: 2px solid #e8ecf7; margin: 2.5rem 0; }
+
+    /* ─── Section break for print ───────────────────────────────────── */
+    .page-break { page-break-before: always; }
+
+    /* ─── Print styles ───────────────────────────────────────────────── */
+    @media print {
+      body { max-width: 100%; padding: 0; font-size: 11pt; }
+      a { color: inherit; text-decoration: none; }
+      pre { white-space: pre-wrap; word-break: break-word; }
+      .no-print { display: none; }
+    }
+
+    /* ─── Priority badges ────────────────────────────────────────────── */
+    .p0 { color: #e74c3c; font-weight: 700; }
+    .p1 { color: #e67e22; font-weight: 700; }
+    .p2 { color: #f39c12; font-weight: 700; }
+    .p3 { color: #27ae60; font-weight: 700; }
+
+    /* ─── Footer ─────────────────────────────────────────────────────── */
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 2px solid #e8ecf7;
+      font-size: .8rem;
+      color: #888;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- CAPA                                                              -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="cover">
+    <div class="badge">Diagnóstico Técnico</div>
+    <h1>SmartAssets / Smart Check</h1>
+    <p class="subtitle">Documentação Técnica Analítica — Frontend &amp; Referência de Integração Backend</p>
+    <table>
+      <tr><td>Projeto</td><td>SmartAssets / Smart Check</td></tr>
+      <tr><td>Data</td><td>2026-03-06</td></tr>
+      <tr><td>Analista</td><td>Diagnóstico Técnico Automatizado</td></tr>
+      <tr><td>Escopo</td><td>Frontend (Vite + React + TypeScript + Tailwind + ESLint) + Referência de Integração Backend (.NET)</td></tr>
+      <tr><td>Versão</td><td>1.0</td></tr>
+    </table>
+    <br>
+    <div class="callout callout-info no-print" style="margin-top:2rem; text-align:left;">
+      <strong>📄 Exportar para PDF:</strong> Pressione <code>Ctrl+P</code> (ou <code>Cmd+P</code> no Mac)
+      → Destino: <em>Salvar como PDF</em> → ativar "Gráficos de fundo" → <strong>Salvar</strong>.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- SUMÁRIO                                                           -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <nav class="toc">
+    <h2>Sumário</h2>
+    <ol>
+      <li><a href="#sec1">Escopo e Premissas</a></li>
+      <li><a href="#sec2">Visão Geral da Arquitetura</a></li>
+      <li><a href="#sec3">Frontend — Estrutura e Organização</a></li>
+      <li><a href="#sec4">Frontend — Dependências e Tooling</a></li>
+      <li><a href="#sec5">Frontend — Variáveis de Ambiente</a></li>
+      <li><a href="#sec6">Frontend — Configuração de Ferramentas</a></li>
+      <li><a href="#sec7">Frontend — Padrões de Código e Arquitetura</a></li>
+      <li><a href="#sec8">Integração com Backend e Assets (Azure Files + SAS)</a></li>
+      <li><a href="#sec9">CI/CD e Deploy</a></li>
+      <li><a href="#sec10">Riscos e Pontos de Atenção</a></li>
+      <li><a href="#sec11">Recomendações Priorizadas</a></li>
+      <li><a href="#sec12">Referência de Endpoints do Backend</a></li>
+      <li><a href="#sec13">Execução Local</a></li>
+      <li><a href="#sec14">Exportação para PDF</a></li>
+    </ol>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 1. ESCOPO E PREMISSAS                                             -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec1">1. Escopo e Premissas</h1>
+
+  <h2>1.1 Objetivo</h2>
+  <p>Este documento é um <strong>diagnóstico técnico consultivo</strong> do projeto SmartAssets / Smart Check. Tem caráter analítico e <strong>não prevê alterações de funcionalidades existentes</strong>.</p>
+
+  <h2>1.2 Premissas</h2>
+  <ul>
+    <li>O <strong>frontend</strong> está implementado com Vite, React 18, TypeScript, React Router, Tailwind CSS e ESLint.</li>
+    <li>O <strong>backend</strong> é uma API .NET hospedada separadamente; este documento documenta a integração a partir do que o frontend consome.</li>
+    <li>Os assets de imagem são armazenados no <strong>Azure Files</strong> e acessados via URL com token SAS.</li>
+    <li>O deploy do frontend é realizado em ambiente Windows (IIS ou Azure App Service Windows) com <code>web.config</code>.</li>
+    <li>O pipeline de CI/CD usa <strong>Azure Pipelines</strong> (<code>azure-pipelines.frontend.yml</code>).</li>
+  </ul>
+
+  <h2>1.3 Fora do Escopo</h2>
+  <ul>
+    <li>Alterações de código de produção.</li>
+    <li>Análise interna do código-fonte do backend .NET.</li>
+    <li>Configuração de infraestrutura de banco de dados (SQL Server).</li>
+  </ul>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 2. VISÃO GERAL DA ARQUITETURA                                     -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec2" class="page-break">2. Visão Geral da Arquitetura</h1>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         USUÁRIO (Navegador)                             │
+└──────────────────────────────┬──────────────────────────────────────────┘
+                               │ HTTPS
+                               ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│              FRONTEND  (React 18 + Vite + TypeScript)                    │
+│                                                                          │
+│  ┌──────────────┐  ┌─────────────────┐  ┌───────────────────────────┐  │
+│  │  React Router│  │  Componentes UI │  │  Tailwind CSS (estilos)   │  │
+│  │  (rotas SPA) │  │  (features +    │  │  + globals.css            │  │
+│  └──────────────┘  │   shared)       │  └───────────────────────────┘  │
+│                    └─────────────────┘                                  │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │              src/shared/api/apiClient.ts                        │   │
+│  │   axios/fetch wrapper → /api/* (proxy Vite em DEV)             │   │
+│  │                       → VITE_API_BASE_URL (PROD)               │   │
+│  └──────────────────────────────┬──────────────────────────────────┘   │
+│                                 │                                        │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │              src/shared/lib/assets.ts                           │   │
+│  │   URL = VITE_ASSETS_BASE_URL + path + "?" + VITE_ASSETS_SAS    │   │
+│  └──────────────────────────────┬──────────────────────────────────┘   │
+└────────────────────────────────┬┴──────────────────────────────────────┘
+                                 │                       │
+                    REST / JSON  │                       │ HTTPS (SAS URL)
+                                 ▼                       ▼
+┌───────────────────────────┐       ┌─────────────────────────────────────┐
+│   Backend API (.NET)      │       │  Azure Files (storage de imagens)   │
+│   /api/*                  │       │  /images/*  (containers de assets)  │
+│   (SQL Server, regras)    │       └─────────────────────────────────────┘
+└───────────────────────────┘
+
+CI/CD: Azure Pipelines → Build Vite → Artefato dist/ → Deploy IIS/App Service (Windows)
+</pre>
+
+  <h2>2.1 Fluxos Principais</h2>
+  <table>
+    <thead><tr><th>Fluxo</th><th>Caminho</th></tr></thead>
+    <tbody>
+      <tr><td>Autenticação</td><td>Browser → apiClient → <code>POST /api/auth/*</code> → Backend .NET</td></tr>
+      <tr><td>Listagem de ativos</td><td>Browser → apiClient → <code>GET /api/assets</code> → Backend .NET → SQL Server</td></tr>
+      <tr><td>Visualização de imagem</td><td>Browser → assets.ts → Azure Files (URL + SAS token)</td></tr>
+      <tr><td>Geocodificação / Mapas</td><td>Browser → Google Maps JS API (chave <code>VITE_GOOGLE_MAPS_API_KEY</code>)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 3. ESTRUTURA E ORGANIZAÇÃO                                        -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec3" class="page-break">3. Frontend — Estrutura e Organização</h1>
+
+  <h2>3.1 Estrutura de Pastas</h2>
+<pre>
+/                               ← raiz do projeto
+├── index.html                  ← entrypoint HTML do Vite
+├── vite.config.ts              ← configuração do Vite (alias, proxy, plugins)
+├── tsconfig.json               ← configuração TypeScript
+├── tsconfig.node.json          ← TS para scripts do Vite/Node
+├── eslint.config.js            ← configuração ESLint
+├── tailwind.config.ts          ← configuração Tailwind CSS
+├── postcss.config.js           ← PostCSS (autoprefixer + tailwind)
+├── package.json                ← dependências e scripts NPM
+├── azure-pipelines.frontend.yml← pipeline CI/CD (Azure DevOps)
+├── web.config                  ← reescrita de rotas SPA (IIS)
+├── public/                     ← assets estáticos públicos
+└── src/
+    ├── main.tsx                ← entrypoint React (ReactDOM.createRoot)
+    ├── App.tsx                 ← componente raiz (Router, providers globais)
+    ├── vite-env.d.ts           ← tipos das variáveis de ambiente Vite
+    ├── shared/                 ← código compartilhado entre features
+    │   ├── api/
+    │   │   └── apiClient.ts    ← cliente HTTP centralizado
+    │   ├── lib/
+    │   │   └── assets.ts       ← helper de URLs de assets (Azure Files + SAS)
+    │   ├── styles/
+    │   │   └── globals.css     ← estilos globais + diretivas Tailwind
+    │   ├── components/         ← componentes UI reutilizáveis
+    │   ├── hooks/              ← hooks customizados reutilizáveis
+    │   └── types/              ← tipos/interfaces TypeScript globais
+    └── features/               ← módulos de domínio (feature-based)
+        ├── auth/               ← autenticação (login, logout, guards)
+        ├── assets/             ← gestão de ativos
+        ├── dashboard/          ← painel principal
+        ├── maps/               ← integração Google Maps
+        └── …/                 ← outras features
+</pre>
+
+  <h2>3.2 Entrypoints</h2>
+  <table>
+    <thead><tr><th>Arquivo</th><th>Papel</th></tr></thead>
+    <tbody>
+      <tr><td><code>index.html</code></td><td>Único HTML servido pelo Vite; contém <code>&lt;div id="root"&gt;</code> e o script <code>src/main.tsx</code></td></tr>
+      <tr><td><code>src/main.tsx</code></td><td>Inicializa React (<code>ReactDOM.createRoot</code>), monta <code>&lt;App /&gt;</code></td></tr>
+      <tr><td><code>src/App.tsx</code></td><td>Define <code>&lt;BrowserRouter&gt;</code>, providers de contexto globais e rotas de alto nível</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.3 Roteamento (React Router v6)</h2>
+<pre>
+// Exemplo de estrutura de rotas em App.tsx
+&lt;BrowserRouter&gt;
+  &lt;Routes&gt;
+    &lt;Route path="/login"      element={&lt;LoginPage /&gt;} /&gt;
+    &lt;Route element={&lt;PrivateRoute /&gt;}&gt;   {/* guard de autenticação */}
+      &lt;Route path="/"           element={&lt;Dashboard /&gt;} /&gt;
+      &lt;Route path="/assets"     element={&lt;AssetsPage /&gt;} /&gt;
+      &lt;Route path="/assets/:id" element={&lt;AssetDetail /&gt;} /&gt;
+      &lt;Route path="/maps"       element={&lt;MapsPage /&gt;} /&gt;
+    &lt;/Route&gt;
+    &lt;Route path="*"           element={&lt;NotFound /&gt;} /&gt;
+  &lt;/Routes&gt;
+&lt;/BrowserRouter&gt;
+</pre>
+  <p>O alias <code>@</code> aponta para <code>src/</code> (configurado em <code>tsconfig.json</code> e <code>vite.config.ts</code>), permitindo imports como <code>import { apiClient } from '@/shared/api/apiClient'</code>.</p>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 4. DEPENDÊNCIAS E TOOLING                                         -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec4" class="page-break">4. Frontend — Dependências e Tooling</h1>
+
+  <h2>4.1 Stack Principal</h2>
+  <table>
+    <thead><tr><th>Pacote</th><th>Versão estimada</th><th>Papel</th></tr></thead>
+    <tbody>
+      <tr><td><code>react</code></td><td>^18.x</td><td>Biblioteca de UI</td></tr>
+      <tr><td><code>react-dom</code></td><td>^18.x</td><td>Renderização no DOM</td></tr>
+      <tr><td><code>react-router-dom</code></td><td>^6.x</td><td>Roteamento SPA</td></tr>
+      <tr><td><code>typescript</code></td><td>^5.x</td><td>Tipagem estática</td></tr>
+      <tr><td><code>vite</code></td><td>^5.x</td><td>Bundler / dev server</td></tr>
+      <tr><td><code>tailwindcss</code></td><td>^3.x</td><td>Framework CSS utilitário</td></tr>
+      <tr><td><code>@vitejs/plugin-react</code></td><td>^4.x</td><td>Plugin React para Vite (Fast Refresh)</td></tr>
+      <tr><td><code>autoprefixer</code></td><td>^10.x</td><td>PostCSS: prefixos CSS automáticos</td></tr>
+      <tr><td><code>postcss</code></td><td>^8.x</td><td>Processador CSS (pipeline Tailwind)</td></tr>
+      <tr><td><code>eslint</code></td><td>^8–9.x</td><td>Linter de código</td></tr>
+      <tr><td><code>@typescript-eslint/*</code></td><td>^6–7.x</td><td>Regras ESLint para TypeScript</td></tr>
+      <tr><td><code>eslint-plugin-react-hooks</code></td><td>^4.x</td><td>Regras para hooks React</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4.2 Scripts NPM</h2>
+<pre>
+{
+  "scripts": {
+    "dev":     "vite",                    // servidor de desenvolvimento (HMR)
+    "build":   "tsc && vite build",       // checagem de tipos + build de produção
+    "preview": "vite preview",            // pré-visualização do build
+    "lint":    "eslint src --ext ts,tsx"  // execução do linter
+  }
+}
+</pre>
+
+  <h2>4.3 Versão de Node Recomendada</h2>
+  <p><strong>Node 18 LTS</strong> ou <strong>Node 20 LTS</strong> — compatível com Vite 5 e dependências TypeScript. <code>vite@5</code> requer Node ≥ 18.</p>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 5. VARIÁVEIS DE AMBIENTE                                          -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec5" class="page-break">5. Frontend — Variáveis de Ambiente</h1>
+
+  <div class="callout callout-danger">
+    <strong>⚠️ Segurança:</strong> Qualquer valor em <code>VITE_*</code> é <strong>incorporado estaticamente ao bundle JS</strong> e fica exposto no navegador.
+    <strong>Nunca</strong> coloque secrets de banco de dados, chaves de API com permissões amplas ou tokens de longa duração em variáveis <code>VITE_*</code>.
+  </div>
+
+  <h2>5.1 Tabela de Variáveis</h2>
+  <table>
+    <thead><tr><th>Variável</th><th>Uso</th><th>Ambiente</th></tr></thead>
+    <tbody>
+      <tr><td><code>VITE_API_PROXY_TARGET</code></td><td>URL alvo do proxy Vite em desenvolvimento (ex.: <code>http://localhost:5000</code>)</td><td>Desenvolvimento</td></tr>
+      <tr><td><code>VITE_DOTNET_API_BASE</code></td><td>Base URL da API .NET usada internamente</td><td>Todos</td></tr>
+      <tr><td><code>VITE_API_BASE_URL</code></td><td>URL base da API consumida pelo <code>apiClient.ts</code> em produção</td><td>Produção</td></tr>
+      <tr><td><code>VITE_ASSETS_BASE_URL</code></td><td>URL base do container Azure Files para assets/imagens</td><td>Todos</td></tr>
+      <tr><td><code>VITE_ASSETS_SAS</code></td><td>Token SAS para autenticação no Azure Files</td><td>Todos</td></tr>
+      <tr><td><code>VITE_GOOGLE_MAPS_API_KEY</code></td><td>Chave da Google Maps JavaScript API</td><td>Todos</td></tr>
+      <tr><td><code>VITE_GOOGLE_MAPS_LIBRARIES</code></td><td>Bibliotecas do Google Maps a carregar (ex.: <code>"places,geometry"</code>)</td><td>Todos</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.2 Riscos de Exposição</h2>
+  <table>
+    <thead><tr><th>Variável</th><th>Risco</th><th>Mitigação</th></tr></thead>
+    <tbody>
+      <tr><td><code>VITE_ASSETS_SAS</code></td><td>Token SAS exposto no bundle → acesso não autorizado ao storage</td><td>Usar tokens de curta duração; gerar via backend on-demand</td></tr>
+      <tr><td><code>VITE_GOOGLE_MAPS_API_KEY</code></td><td>Chave exposta → uso indevido com custos financeiros</td><td>Restringir a chave por domínio no Google Cloud Console</td></tr>
+      <tr><td><code>VITE_API_BASE_URL</code></td><td>Revelar URL interna da API</td><td>Usar URL pública; proteger endpoints com autenticação no backend</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.3 Declaração de Tipos (<code>src/vite-env.d.ts</code>)</h2>
+<pre>
+/// &lt;reference types="vite/client" /&gt;
+
+interface ImportMetaEnv {
+  readonly VITE_API_PROXY_TARGET: string;
+  readonly VITE_DOTNET_API_BASE: string;
+  readonly VITE_API_BASE_URL: string;
+  readonly VITE_ASSETS_BASE_URL: string;
+  readonly VITE_ASSETS_SAS: string;
+  readonly VITE_GOOGLE_MAPS_API_KEY: string;
+  readonly VITE_GOOGLE_MAPS_LIBRARIES: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 6. CONFIGURAÇÃO DE FERRAMENTAS                                    -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec6" class="page-break">6. Frontend — Configuração de Ferramentas</h1>
+
+  <h2>6.1 Vite (<code>vite.config.ts</code>)</h2>
+<pre>
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig(({ mode }) =&gt; {
+  const env = loadEnv(mode, process.cwd(), '');
+  return {
+    plugins: [react()],
+    resolve: {
+      alias: { '@': path.resolve(__dirname, './src') }, // alias @ → src/
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_API_PROXY_TARGET,
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
+    build: {
+      outDir: 'dist',
+      sourcemap: false,  // desabilitar em produção
+    },
+  };
+});
+</pre>
+
+  <h2>6.2 TypeScript (<code>tsconfig.json</code>)</h2>
+<pre>
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["src"]
+}
+</pre>
+
+  <h2>6.3 Tailwind CSS (<code>tailwind.config.ts</code>) + Globals</h2>
+<pre>
+// tailwind.config.ts
+export default {
+  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  theme: { extend: { /* customizações SmartAssets */ } },
+  plugins: [],
+};
+
+/* src/shared/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</pre>
+
+  <h2>6.4 ESLint</h2>
+<pre>
+// eslint.config.js (flat config) ou .eslintrc
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "react-refresh/only-export-components": "warn",
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
+}
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 7. PADRÕES DE CÓDIGO E ARQUITETURA                                -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec7" class="page-break">7. Frontend — Padrões de Código e Arquitetura</h1>
+
+  <h2>7.1 Arquitetura Feature-Based</h2>
+<pre>
+src/features/
+  auth/
+    components/    ← LoginForm, etc.
+    hooks/         ← useAuth, useAuthGuard
+    services/      ← authService.ts (chamadas à API)
+    types/         ← User, AuthToken
+    index.ts       ← barrel export
+  assets/
+    components/
+    hooks/
+    services/      ← assetsService.ts
+    types/
+    index.ts
+</pre>
+
+  <h2>7.2 Cliente HTTP (<code>src/shared/api/apiClient.ts</code>)</h2>
+<pre>
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+});
+
+// Interceptor de request: adicionar token de autenticação
+apiClient.interceptors.request.use((config) =&gt; {
+  const token = localStorage.getItem('auth_token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// Interceptor de response: tratamento de erros globais
+apiClient.interceptors.response.use(
+  (res) =&gt; res,
+  (error) =&gt; {
+    if (error.response?.status === 401) { /* redirecionar para login */ }
+    return Promise.reject(error);
+  }
+);
+
+export default apiClient;
+</pre>
+  <div class="callout callout-warning">
+    <strong>⚠️ Atenção:</strong> Armazenar tokens no <code>localStorage</code> é vulnerável a XSS.
+    Considerar <code>httpOnly cookies</code> para maior segurança.
+  </div>
+
+  <h2>7.3 Helper de Assets (<code>src/shared/lib/assets.ts</code>)</h2>
+<pre>
+const BASE = import.meta.env.VITE_ASSETS_BASE_URL;
+const SAS  = import.meta.env.VITE_ASSETS_SAS;
+
+export function getAssetUrl(filePath: string): string {
+  const base = BASE.endsWith('/') ? BASE : `${BASE}/`;
+  const sas  = SAS.startsWith('?') ? SAS : `?${SAS}`;
+  return `${base}${filePath}${sas}`;
+}
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 8. INTEGRAÇÃO COM BACKEND E AZURE FILES                           -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec8" class="page-break">8. Integração com Backend e Assets (Azure Files + SAS)</h1>
+
+  <h2>8.1 Proxy de Desenvolvimento (Vite)</h2>
+  <p>Em desenvolvimento (<code>npm run dev</code>), o Vite redireciona requisições <code>/api/*</code> para o backend local, evitando problemas de CORS:</p>
+<pre>
+Browser → localhost:5173/api/assets → Vite Proxy → http://localhost:5000/api/assets
+</pre>
+
+  <h2>8.2 CORS em Produção</h2>
+  <p>O backend .NET deve configurar CORS para permitir requisições do domínio do frontend:</p>
+<pre>
+// Program.cs — .NET (referência)
+builder.Services.AddCors(options =&gt;
+{
+    options.AddPolicy("FrontendPolicy", policy =&gt;
+        policy.WithOrigins("https://smartassets.dominio.com")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
+});
+</pre>
+
+  <h2>8.3 Azure Files — SAS Token</h2>
+  <p>O <code>VITE_ASSETS_SAS</code> é um token SAS do Azure Storage que autoriza acesso de leitura aos arquivos:</p>
+<pre>
+https://&lt;storage&gt;.file.core.windows.net/&lt;share&gt;/&lt;path&gt;?sv=2022-11-02&amp;sp=r&amp;se=&lt;expiry&gt;&amp;sig=&lt;signature&gt;
+</pre>
+
+  <div class="callout callout-danger">
+    <strong>🔴 Risco crítico:</strong> O token SAS fica embutido no bundle JS.
+    Recomenda-se: (1) token com <strong>validade curta</strong>; (2) permissões <strong>mínimas</strong> (só leitura);
+    (3) idealmente, gerar tokens SAS <strong>on-demand</strong> via endpoint autenticado do backend
+    (<code>GET /api/storage/sas</code>), evitando expor o token no bundle.
+  </div>
+
+  <h2>8.4 Google Maps</h2>
+<pre>
+const { isLoaded } = useJsApiLoader({
+  googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  libraries: import.meta.env.VITE_GOOGLE_MAPS_LIBRARIES.split(','),
+});
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 9. CI/CD E DEPLOY                                                 -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec9" class="page-break">9. CI/CD e Deploy</h1>
+
+  <h2>9.1 Azure Pipelines (<code>azure-pipelines.frontend.yml</code>)</h2>
+<pre>
+trigger:
+  branches:
+    include: [main, develop]
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  nodeVersion: '18.x'
+  buildDir: 'dist'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildFrontend
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(nodeVersion)
+          - script: npm ci
+            displayName: 'Instalar dependências'
+          - script: npm run build
+            displayName: 'Build de produção'
+            env:
+              VITE_API_BASE_URL:          $(VITE_API_BASE_URL)
+              VITE_ASSETS_BASE_URL:       $(VITE_ASSETS_BASE_URL)
+              VITE_ASSETS_SAS:            $(VITE_ASSETS_SAS)
+              VITE_GOOGLE_MAPS_API_KEY:   $(VITE_GOOGLE_MAPS_API_KEY)
+              VITE_GOOGLE_MAPS_LIBRARIES: $(VITE_GOOGLE_MAPS_LIBRARIES)
+              VITE_DOTNET_API_BASE:       $(VITE_DOTNET_API_BASE)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: $(buildDir)
+              ArtifactName: 'frontend-dist'
+
+  - stage: Deploy
+    dependsOn: Build
+    jobs:
+      - deployment: DeployToIIS
+        environment: 'production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: IISWebAppDeploymentOnMachineGroup@0
+                  inputs:
+                    WebSiteName: 'SmartAssets'
+                    Package: '$(Pipeline.Workspace)/frontend-dist'
+</pre>
+
+  <h2>9.2 Variáveis do Pipeline</h2>
+  <p>As variáveis <code>VITE_*</code> são definidas como <strong>variáveis secretas</strong> no Azure DevOps (não em arquivos commitados). No momento do <code>npm run build</code>, o Vite as recebe via <code>process.env</code> e as incorpora ao bundle.</p>
+
+  <h2>9.3 <code>web.config</code> — SPA Fallback (IIS)</h2>
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+  &lt;system.webServer&gt;
+    &lt;rewrite&gt;
+      &lt;rules&gt;
+        &lt;rule name="React Router" stopProcessing="true"&gt;
+          &lt;match url=".*" /&gt;
+          &lt;conditions logicalGrouping="MatchAll"&gt;
+            &lt;add input="{REQUEST_FILENAME}" matchType="IsFile"      negate="true" /&gt;
+            &lt;add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" /&gt;
+          &lt;/conditions&gt;
+          &lt;action type="Rewrite" url="/index.html" /&gt;
+        &lt;/rule&gt;
+      &lt;/rules&gt;
+    &lt;/rewrite&gt;
+    &lt;httpProtocol&gt;
+      &lt;customHeaders&gt;
+        &lt;add name="X-Content-Type-Options" value="nosniff" /&gt;
+        &lt;add name="X-Frame-Options"        value="SAMEORIGIN" /&gt;
+        &lt;add name="X-XSS-Protection"       value="1; mode=block" /&gt;
+      &lt;/customHeaders&gt;
+    &lt;/httpProtocol&gt;
+  &lt;/system.webServer&gt;
+&lt;/configuration&gt;
+</pre>
+
+  <h2>9.4 Fluxo Completo de Deploy</h2>
+<pre>
+Desenvolvedor → git push → Azure Repos
+    ↓
+Azure Pipelines (trigger automático)
+    ↓
+npm ci → npm run build (variáveis injetadas como env do pipeline)
+    ↓
+Artefato: dist/ (HTML + JS + CSS otimizados)
+    ↓
+Deploy → IIS / Azure App Service Windows
+    ↓
+Usuário acessa https://smartassets.dominio.com
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 10. RISCOS E PONTOS DE ATENÇÃO                                    -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec10" class="page-break">10. Riscos e Pontos de Atenção</h1>
+
+  <h2>10.1 Segurança</h2>
+  <table>
+    <thead><tr><th>#</th><th>Risco</th><th>Impacto</th><th>Probabilidade</th></tr></thead>
+    <tbody>
+      <tr><td>R1</td><td>Token SAS exposto no bundle JS</td><td>Alto — acesso não autorizado ao Azure Files</td><td>Alta</td></tr>
+      <tr><td>R2</td><td>Chave Google Maps sem restrição de domínio</td><td>Médio — uso indevido com custos</td><td>Média</td></tr>
+      <tr><td>R3</td><td>JWT/token de auth em localStorage</td><td>Alto — vulnerável a XSS</td><td>Média</td></tr>
+      <tr><td>R4</td><td>CORS do backend mal configurado</td><td>Alto — permite origens indesejadas</td><td>Baixa</td></tr>
+      <tr><td>R5</td><td><code>sourcemap: true</code> em produção</td><td>Médio — expõe código-fonte</td><td>Baixa</td></tr>
+      <tr><td>R6</td><td>Variáveis de ambiente commitadas em <code>.env</code></td><td>Alto — vazamento de segredos</td><td>Baixa</td></tr>
+    </tbody>
+  </table>
+
+  <h2>10.2 Performance</h2>
+  <table>
+    <thead><tr><th>#</th><th>Ponto de Atenção</th><th>Impacto</th></tr></thead>
+    <tbody>
+      <tr><td>P1</td><td>Bundle sem code-splitting por rota</td><td>Tempo de carregamento inicial alto</td></tr>
+      <tr><td>P2</td><td>Imagens sem otimização (sem WebP, sem lazy loading)</td><td>Alto consumo de banda</td></tr>
+      <tr><td>P3</td><td>Ausência de cache HTTP para assets estáticos</td><td>Requisições desnecessárias ao servidor</td></tr>
+      <tr><td>P4</td><td>Google Maps carregando bibliotecas desnecessárias</td><td>Tempo de carregamento do mapa</td></tr>
+    </tbody>
+  </table>
+
+  <h2>10.3 Manutenibilidade</h2>
+  <table>
+    <thead><tr><th>#</th><th>Ponto de Atenção</th></tr></thead>
+    <tbody>
+      <tr><td>M1</td><td>Ausência de testes unitários/integração no frontend</td></tr>
+      <tr><td>M2</td><td>Falta de documentação inline (JSDoc/TSDoc) em funções críticas</td></tr>
+      <tr><td>M3</td><td>Dependências com versões <code>^</code> sem lock rigoroso</td></tr>
+      <tr><td>M4</td><td><code>any</code> no TypeScript reduz benefícios da tipagem</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 11. RECOMENDAÇÕES PRIORIZADAS                                     -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec11" class="page-break">11. Recomendações Priorizadas</h1>
+
+  <h2>11.1 Curto Prazo (urgente — semanas)</h2>
+  <table>
+    <thead><tr><th>Prioridade</th><th>Ação</th><th>Justificativa</th></tr></thead>
+    <tbody>
+      <tr><td><span class="p0">🔴 P0</span></td><td><strong>Mover geração de SAS token para o backend</strong> — endpoint autenticado <code>GET /api/storage/sas</code> retorna token de curta duração</td><td>Elimina R1 (maior risco)</td></tr>
+      <tr><td><span class="p0">🔴 P0</span></td><td><strong>Restringir chave Google Maps</strong> por domínio/referrer no Google Cloud Console</td><td>Elimina R2</td></tr>
+      <tr><td><span class="p0">🔴 P0</span></td><td><strong>Garantir que <code>.env.*.local</code> e arquivos com secrets estão no <code>.gitignore</code></strong></td><td>Previne R6</td></tr>
+      <tr><td><span class="p1">🟠 P1</span></td><td><strong>Migrar armazenamento de token para <code>httpOnly cookie</code></strong></td><td>Reduz R3</td></tr>
+      <tr><td><span class="p1">🟠 P1</span></td><td><strong>Desabilitar source maps em produção</strong> (<code>sourcemap: false</code>)</td><td>Elimina R5</td></tr>
+    </tbody>
+  </table>
+
+  <h2>11.2 Médio Prazo (meses)</h2>
+  <table>
+    <thead><tr><th>Prioridade</th><th>Ação</th><th>Justificativa</th></tr></thead>
+    <tbody>
+      <tr><td><span class="p2">🟡 P2</span></td><td><strong>Code-splitting</strong> com <code>React.lazy</code> + <code>Suspense</code> por rota</td><td>Melhora P1 — carregamento inicial</td></tr>
+      <tr><td><span class="p2">🟡 P2</span></td><td><strong>Testes unitários</strong> (Vitest + React Testing Library)</td><td>Melhora M1</td></tr>
+      <tr><td><span class="p2">🟡 P2</span></td><td><strong>Cache de assets</strong> no <code>web.config</code> ou CDN</td><td>Melhora P3</td></tr>
+      <tr><td><span class="p2">🟡 P2</span></td><td><strong>Lazy loading</strong> de imagens + formatos WebP</td><td>Melhora P2</td></tr>
+      <tr><td><span class="p2">🟡 P2</span></td><td><strong>Análise de bundle</strong> (<code>vite-bundle-visualizer</code>)</td><td>Referência para P1</td></tr>
+    </tbody>
+  </table>
+
+  <h2>11.3 Longo Prazo (roadmap)</h2>
+  <table>
+    <thead><tr><th>Prioridade</th><th>Ação</th><th>Justificativa</th></tr></thead>
+    <tbody>
+      <tr><td><span class="p3">🟢 P3</span></td><td><strong>Content Security Policy (CSP)</strong> no <code>web.config</code></td><td>Proteção adicional contra XSS</td></tr>
+      <tr><td><span class="p3">🟢 P3</span></td><td><strong>CDN</strong> (Azure CDN / Front Door) na frente do App Service</td><td>Performance global</td></tr>
+      <tr><td><span class="p3">🟢 P3</span></td><td><strong>React Query / TanStack Query</strong> para estado de servidor</td><td>Caching, loading states e DX</td></tr>
+      <tr><td><span class="p3">🟢 P3</span></td><td><strong>Monitoramento de erros</strong> (ex.: Sentry) no frontend</td><td>Visibilidade de erros em produção</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 12. REFERÊNCIA DE ENDPOINTS DO BACKEND                            -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec12" class="page-break">12. Referência de Endpoints do Backend</h1>
+  <p>Com base no que o frontend consome, os seguintes endpoints são esperados na API .NET:</p>
+
+  <h2>12.1 Autenticação</h2>
+  <table>
+    <thead><tr><th>Método</th><th>Rota</th><th>Descrição</th><th>Body / Params</th></tr></thead>
+    <tbody>
+      <tr><td><code>POST</code></td><td><code>/api/auth/login</code></td><td>Login de usuário</td><td><code>{ email, password }</code> → <code>{ token, refreshToken, user }</code></td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/auth/logout</code></td><td>Logout / invalidação de token</td><td>Header: <code>Authorization: Bearer &lt;token&gt;</code></td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/auth/refresh</code></td><td>Renovar token</td><td><code>{ refreshToken }</code> → <code>{ token }</code></td></tr>
+      <tr><td><code>GET</code></td><td><code>/api/auth/me</code></td><td>Dados do usuário autenticado</td><td>Header: <code>Authorization: Bearer &lt;token&gt;</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>12.2 Ativos (Assets)</h2>
+  <table>
+    <thead><tr><th>Método</th><th>Rota</th><th>Descrição</th><th>Body / Params</th></tr></thead>
+    <tbody>
+      <tr><td><code>GET</code></td><td><code>/api/assets</code></td><td>Listar ativos</td><td>Query: <code>?page=1&amp;limit=20&amp;search=…</code></td></tr>
+      <tr><td><code>GET</code></td><td><code>/api/assets/:id</code></td><td>Detalhe de um ativo</td><td>Path: <code>id</code></td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/assets</code></td><td>Criar ativo</td><td>Body: JSON ou multipart/form-data</td></tr>
+      <tr><td><code>PUT</code></td><td><code>/api/assets/:id</code></td><td>Atualizar ativo</td><td>Body: JSON com campos do ativo</td></tr>
+      <tr><td><code>DELETE</code></td><td><code>/api/assets/:id</code></td><td>Remover ativo</td><td>Path: <code>id</code></td></tr>
+      <tr><td><code>GET</code></td><td><code>/api/assets/:id/images</code></td><td>Listar imagens do ativo</td><td>Path: <code>id</code></td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/assets/:id/images</code></td><td>Upload de imagem</td><td>Body: multipart/form-data</td></tr>
+    </tbody>
+  </table>
+
+  <h2>12.3 Storage / Assets</h2>
+  <table>
+    <thead><tr><th>Método</th><th>Rota</th><th>Descrição</th></tr></thead>
+    <tbody>
+      <tr><td><code>GET</code></td><td><code>/api/storage/sas</code></td><td>Gerar token SAS de curta duração <em>(recomendado implementar)</em></td></tr>
+      <tr><td>—</td><td><code>/images/*</code></td><td>Servido diretamente pelo Azure Files via URL pública + SAS</td></tr>
+    </tbody>
+  </table>
+
+  <h2>12.4 Mapas / Geolocalização</h2>
+  <table>
+    <thead><tr><th>Método</th><th>Rota</th><th>Descrição</th></tr></thead>
+    <tbody>
+      <tr><td><code>GET</code></td><td><code>/api/assets/:id/location</code></td><td>Coordenadas geográficas de um ativo</td></tr>
+      <tr><td><code>PUT</code></td><td><code>/api/assets/:id/location</code></td><td>Atualizar localização de um ativo</td></tr>
+    </tbody>
+  </table>
+
+  <h2>12.5 Variáveis de Ambiente do Backend (.NET)</h2>
+<pre>
+# appsettings.json / variáveis de ambiente do servidor
+ConnectionStrings__DefaultConnection=Server=...;Database=SmartAssets;...
+AzureStorage__AccountName=&lt;storage-account&gt;
+AzureStorage__AccountKey=&lt;storage-key&gt;       # MANTER COMO SECRET (Azure Key Vault)
+AzureStorage__ShareName=&lt;share-name&gt;
+Jwt__SecretKey=&lt;chave-jwt&gt;                   # MANTER COMO SECRET (Azure Key Vault)
+Jwt__Issuer=https://smartassets.dominio.com
+Jwt__Audience=https://smartassets.dominio.com
+Jwt__ExpiryMinutes=60
+AllowedOrigins=https://smartassets.dominio.com
+</pre>
+
+  <h2>12.6 Requisitos de Execução Local do Backend</h2>
+<pre>
+# Pré-requisitos
+- .NET 7+ SDK
+- SQL Server 2019+ (ou Azure SQL)
+- Conta Azure Storage (ou Azurite para emulação local)
+
+# Configuração
+cp appsettings.Development.json.example appsettings.Development.json
+# Preencher strings de conexão e chaves
+
+# Execução
+dotnet restore
+dotnet run --project src/SmartAssets.API
+# API disponível em: https://localhost:5001 (ou http://localhost:5000)
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 13. EXECUÇÃO LOCAL                                                -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec13" class="page-break">13. Execução Local</h1>
+
+  <h2>13.1 Pré-requisitos</h2>
+  <ul>
+    <li><strong>Node.js</strong> 18 LTS ou 20 LTS</li>
+    <li><strong>npm</strong> 9+ (ou pnpm 8+)</li>
+    <li>Acesso ao backend .NET em execução local (ou URL de desenvolvimento)</li>
+    <li>Credenciais Azure Files (para visualização de imagens)</li>
+    <li>Chave Google Maps</li>
+  </ul>
+
+  <h2>13.2 Configuração e Execução</h2>
+<pre>
+# 1. Clonar o repositório
+git clone &lt;url-do-repositorio&gt;
+cd smartassets-frontend
+
+# 2. Instalar dependências
+npm ci
+
+# 3. Criar arquivo de variáveis de ambiente
+cp .env.example .env.development.local
+# Editar .env.development.local:
+
+VITE_API_PROXY_TARGET=http://localhost:5000
+VITE_DOTNET_API_BASE=http://localhost:5000
+VITE_API_BASE_URL=/api
+VITE_ASSETS_BASE_URL=https://&lt;storage&gt;.file.core.windows.net/&lt;share&gt;
+VITE_ASSETS_SAS=?sv=2022-11-02&amp;...
+VITE_GOOGLE_MAPS_API_KEY=AIza...
+VITE_GOOGLE_MAPS_LIBRARIES=places,geometry
+
+# 4. Iniciar servidor de desenvolvimento
+npm run dev
+# Acesse: http://localhost:5173
+
+# Build de produção
+npm run build
+
+# Pré-visualização local do build
+npm run preview
+# Acesse: http://localhost:4173
+
+# Linting
+npm run lint
+</pre>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- 14. EXPORTAÇÃO PARA PDF                                           -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <h1 id="sec14" class="page-break">14. Exportação para PDF</h1>
+
+  <h2>14.1 Opção 1: Navegador (sem instalação — recomendado)</h2>
+  <ol>
+    <li>Abra este arquivo (<code>docs/diagnostico-tecnico-smartassets.html</code>) em qualquer navegador moderno.</li>
+    <li>Pressione <strong>Ctrl+P</strong> (ou <strong>Cmd+P</strong> no Mac).</li>
+    <li>Selecione <strong>"Salvar como PDF"</strong> como destino.</li>
+    <li>Em "Mais configurações": ative <strong>"Gráficos de fundo"</strong>, margens "Mínima".</li>
+    <li>Clique em <strong>"Salvar"</strong>.</li>
+  </ol>
+
+  <h2>14.2 Opção 2: Pandoc (linha de comando)</h2>
+<pre>
+# Instalar pandoc
+# Ubuntu/Debian:
+sudo apt install pandoc wkhtmltopdf
+
+# macOS (Homebrew):
+brew install pandoc wkhtmltopdf
+
+# Gerar PDF a partir do Markdown
+pandoc docs/diagnostico-tecnico-smartassets.md \
+  -o docs/diagnostico-tecnico-smartassets.pdf \
+  --pdf-engine=wkhtmltopdf \
+  --toc --toc-depth=2 \
+  -V margin-top=25mm -V margin-bottom=25mm \
+  -V margin-left=20mm -V margin-right=20mm \
+  -V fontsize=11pt -V lang=pt-BR
+</pre>
+
+  <h2>14.3 Opção 3: md-to-pdf (npm)</h2>
+<pre>
+npm install -g md-to-pdf
+md-to-pdf docs/diagnostico-tecnico-smartassets.md
+# Saída: docs/diagnostico-tecnico-smartassets.pdf
+</pre>
+
+  <h2>14.4 Opção 4: VS Code Extension</h2>
+  <ol>
+    <li>Instale a extensão <strong>"Markdown PDF"</strong> (yzane.markdown-pdf) no VS Code.</li>
+    <li>Abra <code>docs/diagnostico-tecnico-smartassets.md</code>.</li>
+    <li>Clique com botão direito → <strong>"Markdown PDF: Export (pdf)"</strong>.</li>
+  </ol>
+
+  <hr>
+  <footer>
+    <em>Fim do Diagnóstico Técnico — SmartAssets / Smart Check — v1.0 — 2026-03-06</em>
+  </footer>
+
+</body>
+</html>
